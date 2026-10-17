@@ -1,5 +1,6 @@
 from book import Book
 from user import User
+
 settings = {
     "loans_enabled": True
 }
