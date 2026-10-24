@@ -4,6 +4,7 @@ from user import User
 settings = {
     "loans_enabled": True
 }
+
 class Library:
     def __init__(self):
         self.books = []
@@ -38,9 +39,11 @@ class Library:
                 print("User not found")
                 return u
         raise ValueError("User not found")
+        #raise ValueError("Invalid user id")
 
     def _find_book(self, isbn):
         for b in self.books:
             if b.isbn == isbn:
                 return b
         raise ValueError("Book not found")
+        #raise ValueError("Invalid ISBN")
