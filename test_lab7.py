@@ -16,15 +16,15 @@ def library_init():
 # Pruebas de unidad
 @pytest.mark.unit
 def test_book_borrow():
-    librazo1 = book.Book("El Alquimistra", "Paulo Coehlo", 1967, "ISBN0001")
-    assert librazo1.title == "El Alquimistra"
+    librazo1 = book.Book("El Alquimista", "Paulo Coehlo", 1967, "ISBN0001")
+    assert librazo1.title == "El Alquimista"
     librazo1.borrow()
     assert librazo1.borrowed == True
 
 @pytest.mark.unit
 def test_book_borrow_twice():
-    librazo1 = book.Book("El Alquimistra", "Paulo Coehlo", 1967, "ISBN0001")
-    assert librazo1.title == "El Alquimistra"
+    librazo1 = book.Book("El Alquimista", "Paulo Coehlo", 1967, "ISBN0001")
+    assert librazo1.title == "El Alquimista"
     librazo1.borrow()
     assert librazo1.borrowed == True
     with pytest.raises(ValueError, match="The book has alerady been borrowed"):
@@ -32,8 +32,8 @@ def test_book_borrow_twice():
 
 @pytest.mark.unit
 def test_book_borrowed_and_returned():
-    librazo1 = book.Book("El Alquimistra", "Paulo Coehlo", 1967, "ISBN0001")
-    assert librazo1.title == "El Alquimistra"
+    librazo1 = book.Book("El Alquimista", "Paulo Coehlo", 1967, "ISBN0001")
+    assert librazo1.title == "El Alquimista"
     librazo1.borrow()
     assert librazo1.borrowed == True
     librazo1.return_book()
@@ -49,8 +49,8 @@ def test_user_history():
     user1.get_history()
     assert user1.get_history() == ['Borrwed: El Alquimista', 'Reurned: El Alquimista']
 
-# Pruebas de integracion
-
+# Pruebas de integracion; no existen:
+# Hecha por JP
 @pytest.mark.sys # Es de sistema ya que abarca mas modulos, deberia repetirla con utilizando directamente la clase library ya que improta las otras clases.
 def test_library_borrow():
     librazo1 = book.Book("El Alquimista", "Paulo Coehlo", 1967, "ISBN0001")
@@ -63,6 +63,7 @@ def test_library_borrow():
     lib.borrow_book('ID0001', 'ISBN0001')
     assert librazo1.borrowed == True
 
+# Hecha por JP
 @pytest.mark.sys # Aqui aplicamos el fixture
 def test_library_borrow_fixturized(library_init):
     lib = library_init
@@ -70,13 +71,15 @@ def test_library_borrow_fixturized(library_init):
     lib.borrow_book('ID0001', 'ISBN0001')
     assert lib.books[0].borrowed == True
 
-# Pruebas de levantamiento de erroes
+# Pruebas de levantamiento de erroes;
+# Hecha por JP
 @pytest.mark.sys
 def test_library_find_book_ValueError(library_init): # Aplicamos fixture
     lib = library_init
     with pytest.raises(ValueError):
         lib._find_book(67)
-        
+
+# Hecha por JP
 @pytest.mark.sys
 def test_library_find_user_ValueError(library_init): # Aplicamos fixture
     lib = library_init
@@ -84,14 +87,17 @@ def test_library_find_user_ValueError(library_init): # Aplicamos fixture
         lib._find_user(67) #sixseven
 
 # Pruebas de verificacion de mensajes de error
+# Hecha por JP
 @pytest.mark.sys
 def test_library_find_user_ValueError_message(library_init, capsys):
     lib = library_init
     with pytest.raises(ValueError):
         lib._find_book(67)
         captured = capsys._captured_err()
-        assert captured.out == "USer not found"
+        #assert captured.out == "USer not found"
+        assert captured.err == "USer not found"
 
+# Hecha por JP
 @pytest.mark.sys
 def test_library_find_book_ValueError_message(library_init, capsys):
     lib = library_init
